@@ -1,5 +1,6 @@
 package br.com.framwork.implementacao.crud;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -54,134 +55,192 @@ public class ImplementacaoCrud <T> implements InterfaceCrud<T> {
 	
 	@Override
 	public void save(T obj) throws Exception {
-		// TODO Auto-generated method stub
-		
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().save(obj);
 	}
 
 	@Override
 	public void persist(T obj) throws Exception {
-		// TODO Auto-generated method stub
-		
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().persist(obj);
+		executeFlushSession();
 	}
 
+	/*
+	 * Se já tiver uma primary key atualiza
+	 * se não, salva
+	 * Merge faz o mesmo, mas retornando o objeto, 
+	 * enquanto o save não faz 
+	 */
 	@Override
 	public void saveOrUpdate(T obj) throws Exception {
-		// TODO Auto-generated method stub
-		
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().saveOrUpdate(obj);
+		executeFlushSession();
 	}
 
 	@Override
 	public void update(T obj) throws Exception {
-		// TODO Auto-generated method stub
-		
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().saveOrUpdate(obj);
+		executeFlushSession();
 	}
 
 	@Override
 	public void delete(T obj) throws Exception {
-		// TODO Auto-generated method stub
-		
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().delete(obj);
+		executeFlushSession();
 	}
 
 	@Override
 	public T merge(T obj) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		obj = (T) sessionFactory.getCurrentSession().merge(obj);
+		executeFlushSession();
+		return obj;
 	}
 
 	@Override
-	public List<T> findList(Class<T> objs) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<T> findList(Class<T> entidade) throws Exception {
+		validaSessionFactory();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select distinct(entity) from").append(entidade.getSimpleName()).append("entity");
+		
+		List<T> lista = sessionFactory.getCurrentSession().createQuery(query.toString()).list();
+		
+		return lista;
 	}
 
 	@Override
 	public Object findById(Class<T> entidade, Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		Object obj = sessionFactory.getCurrentSession().load(getClass(), id);
+		return obj;
 	}
 
 	@Override
 	public T findGenericById(Class<T> entidade, Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		T obj = (T) sessionFactory.getCurrentSession().load(getClass(), id);
+		return obj;
 	}
 
+	/*
+	 * Encontra query por estrutura do tipo lista
+	 */
 	@Override
 	public List<T> findListQueryDynamic(String s) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		List<T> lista = new ArrayList<T>();
+		lista = sessionFactory.getCurrentSession().createQuery(s).list();
+		return lista;
 	}
 
+	/*
+	 * HQL para executar uma query dinâmica
+	 */
 	@Override
 	public void executeUpdateQueryDynamic(String s) throws Exception {
-		// TODO Auto-generated method stub
-		
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().createQuery(s).executeUpdate();
 	}
 
+	/*
+	 * SQL para executar uma query dinâmica
+	 */
 	@Override
 	public void executeUpdateSQLDynamic(String s) throws Exception {
-		// TODO Auto-generated method stub
-		
+		validaSessionFactory();
+		sessionFactory.getCurrentSession().createSQLQuery(s).executeUpdate();
+		executeFlushSession();
 	}
 
+	/*
+	 * Limpa toda a sessão para evitar cash
+	 */
 	@Override
 	public void clearSession() throws Exception {
-		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().clear();
 	}
 
+	/*
+	 * Limpa um objeto em específico
+	 */
 	@Override
 	public void evict(Object obj) throws Exception {
-		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().evict(obj);
 	}
 
+	/*
+	 * Retorna a sessão
+	 */
 	@Override
 	public Session getSession() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		return sessionFactory.getCurrentSession();
 	}
 
+	/*
+	 * Retorna o SQL na forma de lista dinâmica
+	 */
 	@Override
 	public List<?> getListSQLDynamic(String sql) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		List<?> lista = sessionFactory.getCurrentSession().createSQLQuery(sql).list();
+		return lista;
 	}
 
 	@Override
 	public JdbcTemplate getJdbcTemplate() {
-		// TODO Auto-generated method stub
-		return null;
+		return jdbcTemplate;
 	}
 
 	@Override
 	public SimpleJdbcTemplate getSimpleJdbcTemplate() {
-		// TODO Auto-generated method stub
-		return null;
+		return simpleJdbcTemplate;
 	}
 
 	@Override
 	public SimpleJdbcInsert getSimpleJdbcInsert() {
-		// TODO Auto-generated method stub
-		return null;
+		return simpleJdbcInsertImplementa;
 	}
 
 	@Override
 	public Long totalRegistro(String table) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sql = new StringBuilder();
+		sql.append("select count(1) from ").append(table);
+		return jdbcTemplate.queryForLong(sql.toString());
 	}
 
+	/*
+	 * Tabela generica de consulta
+	 */
 	@Override
 	public Query obterQuery(String query) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		Query queryReturn = (Query) sessionFactory.getCurrentSession().createQuery(query.toString());
+		return queryReturn;
 	}
 
+	/*
+	 *  Realiza consulta no banco de dados, iniciando o carregamento
+	 * a partir do registro passado no parametro -> iniciaNoRegistro e obtendo o
+	 * máximo de resultados passados em -> maximoResultado
+	 * 
+	 * @param query
+	 * @param iniciaNoRegistro
+	 * @param maximoResultado
+	 * @return List<T
+	 * @throws Exception
+	 */
 	@Override
 	public List<T> findListByQueryDynamic(String query, int iniciaNoRegistro, int maximoResultado) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		validaSessionFactory();
+		List<T> lista = new ArrayList<T>();
+		lista = sessionFactory.getCurrentSession().createQuery(query).setFirstResult(iniciaNoRegistro).setMaxResults(maximoResultado).list();
+		return lista;
 	}
 	
 	private void validaSessionFactory() {
@@ -209,6 +268,21 @@ public class ImplementacaoCrud <T> implements InterfaceCrud<T> {
 	}
 	
 	private void rollBackProcessoAjax() {
-		sessionFactory.getCurrentSession().beginTransaction().commit();
+		sessionFactory.getCurrentSession().beginTransaction().rollback();
+	}
+	
+	/*
+	 * Roda instantaneamente o SQL no banco de dados
+	 * Evita o Cash no sistema
+	 */
+	private void executeFlushSession() {
+		sessionFactory.getCurrentSession().flush();
+	}
+	
+	public 	List<Object[]> getListSQLDynamicArray(String sql) throws Exception{
+		validaSessionFactory();
+		
+		List<Object[]> lista = (List<Object[]>) sessionFactory.getCurrentSession().createQuery(sql).list();
+		return lista;
 	}
 }
