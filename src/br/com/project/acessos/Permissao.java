@@ -146,8 +146,8 @@ public enum Permissao {
 
 			@Override
 			public int compare(Permissao o1, Permissao o2) {
-				// TODO Auto-generated method stub
-				return 0;
+			
+				return new Integer(o1.ordinal()).compareTo(new Integer(o2.ordinal()));
 			}
 		
 		});
