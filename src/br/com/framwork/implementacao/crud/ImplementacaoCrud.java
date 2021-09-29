@@ -93,6 +93,7 @@ public class ImplementacaoCrud <T> implements InterfaceCrud<T> {
 		executeFlushSession();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T merge(T obj) throws Exception {
 		validaSessionFactory();
@@ -101,6 +102,7 @@ public class ImplementacaoCrud <T> implements InterfaceCrud<T> {
 		return obj;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findList(Class<T> entidade) throws Exception {
 		validaSessionFactory();
@@ -120,6 +122,7 @@ public class ImplementacaoCrud <T> implements InterfaceCrud<T> {
 		return obj;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T findGenericById(Class<T> entidade, Long id) throws Exception {
 		validaSessionFactory();
@@ -130,6 +133,7 @@ public class ImplementacaoCrud <T> implements InterfaceCrud<T> {
 	/*
 	 * Encontra query por estrutura do tipo lista
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findListQueryDynamic(String s) throws Exception {
 		validaSessionFactory();
@@ -235,6 +239,7 @@ public class ImplementacaoCrud <T> implements InterfaceCrud<T> {
 	 * @return List<T
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findListByQueryDynamic(String query, int iniciaNoRegistro, int maximoResultado) throws Exception {
 		validaSessionFactory();
@@ -263,10 +268,12 @@ public class ImplementacaoCrud <T> implements InterfaceCrud<T> {
 	/*
 	 * Inicia o processo de commit por requisição Ajax
 	 */
+	@SuppressWarnings("unused")
 	private void commitProcessoAjax() {
 		sessionFactory.getCurrentSession().beginTransaction().commit();
 	}
 	
+	@SuppressWarnings("unused")
 	private void rollBackProcessoAjax() {
 		sessionFactory.getCurrentSession().beginTransaction().rollback();
 	}
@@ -279,6 +286,7 @@ public class ImplementacaoCrud <T> implements InterfaceCrud<T> {
 		sessionFactory.getCurrentSession().flush();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public 	List<Object[]> getListSQLDynamicArray(String sql) throws Exception{
 		validaSessionFactory();
 		

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.hibernate.envers.RevisionListener;
 
-import br.com.framwork.utils.UtilFrameworks;
+import br.com.framework.utils.UtilFrameworks;
 import br.com.project.model.classes.Entidade;
 import br.com.project.model.classes.InformacaoRevisao;
 
@@ -15,7 +15,7 @@ public class CustomListener implements RevisionListener, Serializable{
 	@Override
 	public void newRevision(Object revisionEntity) {
 		InformacaoRevisao informacaoRevisao = (InformacaoRevisao) revisionEntity;
-		Long codUser = UtilFrameworks.geThreadLocal().get();
+		Long codUser = UtilFrameworks.getThreadLocal().get();
 		
 		Entidade entidade = new Entidade();
 		

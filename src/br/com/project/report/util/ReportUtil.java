@@ -59,6 +59,7 @@ public class ReportUtil implements Serializable{
 	private File arquivoGerado = null;
 	
 	
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public StreamedContent geraRelatorio(List<?> listDataBeanCollectionReport,
 			HashMap parametrosRelatorio, String nomeRelatorioJasper,
 			String nomeRelatorioSaida, int tipoRelatorio) throws Exception {

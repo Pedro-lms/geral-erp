@@ -1,4 +1,4 @@
-package br.com.framwork.utils;
+package br.com.framework.utils;
 
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ public class UtilFrameworks implements Serializable {
 
 	private static ThreadLocal<Long> threadLocal = new ThreadLocal<Long>();
 	
-	public synchronized static ThreadLocal<Long> geThreadLocal(){
+	public synchronized static ThreadLocal<Long> getThreadLocal(){
 		return threadLocal;
 	}
 }

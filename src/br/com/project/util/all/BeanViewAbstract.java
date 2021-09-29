@@ -2,10 +2,10 @@ package br.com.project.util.all;
 
 import org.springframework.stereotype.Component;
 
-import com.google.inject.spi.Message;
-
 @Component
 public abstract class BeanViewAbstract implements ActionViewPadrao {
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public void limparLista() throws Exception {
