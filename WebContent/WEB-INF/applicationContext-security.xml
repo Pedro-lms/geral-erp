@@ -48,6 +48,8 @@
 		
 		<session-management invalid-session-url="/publico/login.jsf"
 		   session-fixation-protection="migrateSession">
+		   
+		   <!-- Restritor de sessões ativas -->
 		   <concurrency-control max-sessions="1"
 		    expired-url="/publico/login.jsf"
 		    error-if-maximum-exceeded="true"/>
