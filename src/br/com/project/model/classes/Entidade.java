@@ -14,12 +14,14 @@ public class Entidade implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Long ent_codigo;
+	private Long ent_codigo = 0L;
 	
 	private String ent_login = null;
 	
-	private String ent_senha;
+	private String ent_senha = null;
 
+	private boolean ent_inativo = false;
+	
 	public Long getEnt_codigo() {
 		return ent_codigo;
 	}
@@ -42,6 +44,14 @@ public class Entidade implements Serializable {
 
 	public void setEnt_senha(String ent_senha) {
 		this.ent_senha = ent_senha;
+	}
+
+	public boolean getEnt_inativo() {
+		return ent_inativo;
+	}
+
+	public void setEnt_inativo(boolean ent_inativo) {
+		this.ent_inativo = ent_inativo;
 	}
 	
 	
