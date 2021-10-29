@@ -2,7 +2,7 @@
 <Context reloadable ="true">
 
 	<Resource
-		name="jdbc/datasource"
+		name="jdbc/Datasource"
 		auth="Container"
 		type="javax.sql.DataSource"
 		defaultAutoCommit="false"
@@ -21,7 +21,7 @@
 		antiResourceLocking="false"
 		username="postgres"
 		password="12345678"
-		url="jdbc:postgresql://localhost:5432/projeto_jee?autoReconect=true"
+		url="jdbc:postgresql://localhost:5432/datasource?autoReconect=true"
 	></Resource>
 
 </Context>

@@ -56,7 +56,7 @@ public class FilterOpenSessionInView extends DelegatingFilterProxy implements Fi
 		super.doFilter(request, response, filterChain);
 		
 		//JDBC do Ecossistam Spring
-		BasicDataSource springBasicDataSource = (BasicDataSource) ContextLoaderListenerCaixaUtils.getBean("SpringDataSource");
+		BasicDataSource springBasicDataSource = (BasicDataSource) ContextLoaderListenerCaixaUtils.getBean("springDataSource");
 		DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
 		PlatformTransactionManager transactionManager = new DataSourceTransactionManager(springBasicDataSource);
 		TransactionStatus transactionStatus = transactionManager.getTransaction(definition);
