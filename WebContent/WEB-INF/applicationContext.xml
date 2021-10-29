@@ -115,15 +115,16 @@
 	  
 	  
 	 <bean id="reportUtil" class="br.com.project.report.util.ReportUtil"/> 
-	 <bean id="utilFramework" class="br.com.framework.utils.UtilFramework" scope="session"/> 
+	 <bean id="utilFramework" class="br.com.framework.utils.UtilFrameworks" scope="session"/> 
 	 
 	 <!-- Controladores  -->
+	 <bean id="sessionController" class="br.com.project.geral.controller.SessionControllerImpl" scope="singleton"></bean>
 	 
 	 <!-- DAOS -->
-	 <bean id="repositoryLogin" class="br.com.dao.implementacao.DaoLogin"></bean>
+	 <bean id="repositoryLogin" class="br.com.services.implementacao.DaoLogin"></bean>
 	 
 	 <!-- Serviços -->
-	 <bean id="sessionController" class="br.com.project.geral.controller.SessionControllerImpl" scope="singleton"></bean>
+	 <bean id="serviceLogin" class="br.com.services.implementacao.ServiceLoginImpl"></bean>
 	 
 
 </beans>

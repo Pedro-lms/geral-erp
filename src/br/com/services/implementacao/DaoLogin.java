@@ -1,4 +1,4 @@
-package br.com.srv.implementacao;
+package br.com.services.implementacao;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
