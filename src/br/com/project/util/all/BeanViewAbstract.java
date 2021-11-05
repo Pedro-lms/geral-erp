@@ -9,11 +9,11 @@ public abstract class BeanViewAbstract implements ActionViewPadrao {
 
 	@Override
 	public void limparLista() throws Exception {
+
 	}
 
 	@Override
 	public String save() throws Exception {
-
 		return null;
 	}
 
@@ -27,8 +27,8 @@ public abstract class BeanViewAbstract implements ActionViewPadrao {
 	}
 
 	@Override
-	public String update() throws Exception {
-		return null;
+	public void excluir() throws Exception {
+
 	}
 
 	@Override
@@ -47,35 +47,15 @@ public abstract class BeanViewAbstract implements ActionViewPadrao {
 	}
 
 	@Override
-	public String delete() throws Exception {
-		return null;
-	}
-
-	@Override
-	public void cancelar() throws Exception {
-	}
-
-	@Override
 	public void setarVariaveisNulas() throws Exception {
+
 	}
 
 	@Override
-	public void consultarEntidade() throws Exception {
+	public void consultaEntidade() throws Exception {
+
 	}
 
-	@Override
-	public void statusOperation(EstatusPersistencia a) throws Exception {
-		Messages.responseOperation(a);
-	}
-
-	protected void sucesso() throws Exception{
-		statusOperation(EstatusPersistencia.SUCESSO);
-	}
-	
-	protected void erro() throws Exception{
-		statusOperation(EstatusPersistencia.ERRO);
-	}
-	
 	@Override
 	public String redirecionarNewEntidade() throws Exception {
 		return null;
@@ -86,8 +66,23 @@ public abstract class BeanViewAbstract implements ActionViewPadrao {
 		return null;
 	}
 
-	public void addMsg(String message) throws Exception {
-		Messages.message(message);
+	@Override
+	public void statusOperation(EstatusPersistencia estatusPersistencia)
+			throws Exception {
+		Messagens.responseOperation(estatusPersistencia);
+	}
+
+	protected void sucesso() throws Exception {
+		statusOperation(EstatusPersistencia.SUCESSO);
+	}
+
+	protected void error() throws Exception {
+		statusOperation(EstatusPersistencia.ERROR);
+	}
+	
+	@Override
+	public void addMsg(String msg) {
+		Messagens.msg(msg);
 	}
 
 }

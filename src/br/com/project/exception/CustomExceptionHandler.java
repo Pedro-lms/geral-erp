@@ -15,112 +15,104 @@ import javax.faces.event.ExceptionQueuedEventContext;
 import org.hibernate.SessionFactory;
 import org.primefaces.context.RequestContext;
 
-import br.com.framwork.hibernate.session.HibernateUtil;
+import br.com.framework.hibernate.session.HibernateUtil;
+/**
+ * Responsavel por manipular as execeções em JSF
+ * @author alex
+ *
+ */
+public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
-public class CustomExceptionHandler extends ExceptionHandlerWrapper{
+	private ExceptionHandler wrapped;
 
-	private ExceptionHandler wrapperd;
-	
+	// Obtém uma instância do FacesContext
 	final FacesContext facesContext = FacesContext.getCurrentInstance();
-	
+
+	// Obtém um mapa do FacesContext
 	final Map<String, Object> requestMap = facesContext.getExternalContext().getRequestMap();
-	
+
+	// Obtém o estado atual da navegação entre páginas do JSF
 	final NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
-	
-	public CustomExceptionHandler(ExceptionHandler exceptionHandler) {
-		this.wrapperd = exceptionHandler;
+
+	// Declara o construtor que recebe uma exception do tipo ExceptionHandler
+	// como parâmetro
+	CustomExceptionHandler(ExceptionHandler exception) {
+		this.wrapped = exception;
 	}
-	
-	/*
-	 * Sobrescreve o método ExceptionHandler que retorna a "pilha" de exceções
-	 */
+
+	// Sobrescreve o método ExceptionHandler que retorna a "pilha" de exceções
 	@Override
 	public ExceptionHandler getWrapped() {
-		return wrapperd;
+		return wrapped;
 	}
-	
-	/*
-	 *Sobreescreve o metodo handle que é responsável por manipular as exceções do JSF
-	 */
+
+	// Sobrescreve o método handle que é responsável por manipular as exceções
+	// do JSF
 	@Override
 	public void handle() throws FacesException {
+
 		final Iterator<ExceptionQueuedEvent> iterator = getUnhandledExceptionQueuedEvents().iterator();
 		
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			ExceptionQueuedEvent event = iterator.next();
 			ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();
-			
-			//Recuperar a exceção do contexo
+
+			// Recupera a exceção do contexto
 			Throwable exception = context.getException();
-			
-			//Tratamento da exceção
+
+			// Aqui tentamos tratar a exeção 
 			try {
-	
+
 				requestMap.put("exceptionMessage", exception.getMessage());
 				
-				if(exception != null 
-						&& exception.getMessage() != null
-						&& exception.getMessage().indexOf("ConstraintViolantionException") != -1) {//Diferente de menos 1
-
-					FacesContext.getCurrentInstance()
-					.addMessage("message", new FacesMessage(FacesMessage.SEVERITY_WARN,"Registro não pode ser removido por ",
-							"estar associado"));
+				if (exception != null && exception.getMessage() != null && exception.getMessage().indexOf("ConstraintViolationException") != -1) {
+					
+					FacesContext.getCurrentInstance().addMessage("msg",new FacesMessage(FacesMessage.SEVERITY_WARN,"Registro não pode ser removido por estar associado.",""));
 				
-				}else if (exception != null 
-						&& exception.getMessage() != null
-						&& exception.getMessage().indexOf("org.hibernate.StaçeObjectStateException") != -1) {//Diferente de menos 1
+				}
+				else if (exception != null && exception.getMessage() != null && exception.getMessage().indexOf("org.hibernate.StaleObjectStateException") != -1) {
+					
+					FacesContext.getCurrentInstance().addMessage("msg",new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Registro foi atualizado ou excluído por outro usuário. Consulte novamente.",""));
+					
+				}
+				else {
+					// Avisa o usuário do erro
+					FacesContext.getCurrentInstance().addMessage("msg",new FacesMessage(FacesMessage.SEVERITY_FATAL,"O sistema se recuperou de um erro inesperado.",""));
 
-					FacesContext.getCurrentInstance()
-					.addMessage("message", new FacesMessage
-							(FacesMessage.SEVERITY_ERROR,"Registro foi atualizado ou pode ter sido removido por outro usuário",
-							"Consulte novamente."));
-				
-				}else {
-					//Avisa ao usuário do erro
-					FacesContext.getCurrentInstance()
-					.addMessage("message", new FacesMessage
-							(FacesMessage.SEVERITY_FATAL,"O sistema apresentou um erro inesperado",
-							""));
+					// Tranquiliza o usuário para que ele continue usando o sistema
+					FacesContext.getCurrentInstance().addMessage("msg",new FacesMessage(FacesMessage.SEVERITY_INFO,"Você pode continuar usando o sistema normalmente!",""));
 					
-					//Tranquiliza o usuário
-					FacesContext.getCurrentInstance()
-					.addMessage("message", new FacesMessage
-							(FacesMessage.SEVERITY_INFO,"Fique tranquilo! Você pode continuar usando o sistema normalmente",
-							"Consulte novamente."));
+					FacesContext.getCurrentInstance().addMessage("msg",new FacesMessage(FacesMessage.SEVERITY_FATAL,"O erro foi causado por:\n"+exception.getMessage(), ""));
 					
-					//Informa o porquê do erro
-					FacesContext.getCurrentInstance()
-					.addMessage("message", new FacesMessage
-							(FacesMessage.SEVERITY_FATAL,"Erro causado por: \n",
-							exception.getMessage()));
+					// SETA A NAVEGAÇÃO PARA UMA PÁGINA PADRÃO - REDIRECIONA PARA UMA PAGINA DE ERRO.
+					//esse alert apenas é exibio se a pagina não redirecionar
+					RequestContext.getCurrentInstance().execute("alert('O sistema se recuperou de um erro inesperado.')"); 
 					
-					//Caso a página não redirecional o primefaces faz um alert javascriot
-					RequestContext.getCurrentInstance().execute("alert('O sistema se recuperou de um erro inesperado");
+					 RequestContext.getCurrentInstance().showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Erro", "O sistema se recuperou de um erro inesperado.."));
 					
-					RequestContext.getCurrentInstance()
-					.showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Erro", "O sistema se recuperou de um erro inexperado"));
-					
-					//Redirecionamento para página de erro
 					navigationHandler.handleNavigation(facesContext, null, "/error/error.jsf?faces-redirect=true&expired=true");
 				}
-				
-				//Renderização de resposta
+
+				// Renderiza a pagina de erro e exibe as mensagens
 				facesContext.renderResponse();
+			} finally {
 				
+				SessionFactory sf = HibernateUtil.getSessionFactory();
 				
-			}finally {
-				SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-				if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
-					sessionFactory.getCurrentSession().getTransaction().rollback();
+				if (sf.getCurrentSession().getTransaction().isActive()) {
+					sf.getCurrentSession().getTransaction().rollback();
 				}
+				//imprimie exceção no console
+				exception.printStackTrace();
+				
+				// Remove a exeção da fila
+				iterator.remove();
 			}
-			//Imprime o erro no console
-			exception.printStackTrace();
-			
-			iterator.remove();
 		}
-		
+		// Manipula o erro
 		getWrapped().handle();
+		
 	}
-	
+
 }

@@ -4,36 +4,28 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 
-public interface ActionViewPadrao extends Serializable{
+public interface ActionViewPadrao extends Serializable {
 
 	abstract void limparLista() throws Exception;
-	
+
 	abstract String save() throws Exception;
-	
+
 	abstract void saveNotReturn() throws Exception;
-	
+
 	abstract void saveEdit() throws Exception;
-	
-	abstract String update() throws Exception;
-	
+
+	abstract void excluir() throws Exception;
+
 	abstract String ativar() throws Exception;
-	
-	/*
-	 * Realiza inicialização de métodos, valores ou variáveis
-	 * @thorws Exception
-	 */
+
 	@PostConstruct
 	abstract String novo() throws Exception;
-	
+
 	abstract String editar() throws Exception;
-	
-	abstract String delete() throws Exception;
-	
-	abstract void cancelar() throws Exception;
-	
+
 	abstract void setarVariaveisNulas() throws Exception;
-	
-	abstract void consultarEntidade() throws Exception;
+
+	abstract void consultaEntidade() throws Exception;
 
 	abstract void statusOperation(EstatusPersistencia a) throws Exception;
 
@@ -41,6 +33,8 @@ public interface ActionViewPadrao extends Serializable{
 
 	abstract String redirecionarFindEntidade() throws Exception;
 	
-	abstract void addMsg() throws Exception;
+	abstract void addMsg(String msg);
+
+	void addMsg() throws Exception;
 
 }
