@@ -21,8 +21,22 @@
     	<property name="hibernate.connection.autocommit">false</property>
    		<property name="hibernate.connection.pool_size">50</property>
    
-   		<mapping class="br.com.project.model.classes.Entidade"/>
-   		
+		<mapping class="br.com.project.model.classes.Filial" />
+		<mapping class="br.com.project.model.classes.Pais" />
+		<mapping class="br.com.project.model.classes.Estado" />
+		<mapping class="br.com.project.model.classes.Cidade" />
+		<mapping class="br.com.project.model.classes.Bairro" />
+		<mapping class="br.com.project.model.classes.Entidade" />
+		<mapping class="br.com.project.model.classes.Mensagem" />
+		<mapping class="br.com.project.model.classes.Produto" />
+		<mapping class="br.com.project.model.classes.Serie" />
+		<mapping class="br.com.project.model.classes.Empreendimento" />
+		<mapping class="br.com.project.model.classes.EntidadeEntidade" />
+		<mapping class="br.com.project.model.classes.Titulo" />
+		<mapping class="br.com.project.model.classes.ComissaoFuncionarioFilial" />
+		<mapping class="br.com.project.model.classes.ValorComissaoFuncionarioFilial" /> 
+		<mapping class="br.com.project.model.classes.InformacaoRevisao" />
+		<mapping class="br.com.project.model.classes.SendEmail" />   		
    		<listener class="org.hibernate.envers.event.AuditEventListener"
    		 type="post-load"/>
    		
