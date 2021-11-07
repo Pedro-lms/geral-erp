@@ -10,6 +10,10 @@ import org.primefaces.context.RequestContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+<<<<<<< HEAD
+=======
+import br.com.framework.interfac.crud.InterfaceCrud;
+>>>>>>> b82debccd9321445826519ab55611a02b8d9bf53
 import br.com.project.bean.geral.BeanManagedViewAbstract;
 import br.com.project.geral.controller.SessionController;
 import br.com.services.interfaces.ServiceLogin;
@@ -84,4 +88,25 @@ public class LoginBeanView extends BeanManagedViewAbstract{
 	@Override
 	public void addMsg() throws Exception {		
 	}
+<<<<<<< HEAD
+=======
+
+	@Override
+	protected Class<?> getClassImplement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected InterfaceCrud<?> getController() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String condicaoAndParaPesquisa() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+>>>>>>> b82debccd9321445826519ab55611a02b8d9bf53
 }

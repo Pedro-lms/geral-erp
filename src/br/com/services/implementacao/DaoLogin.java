@@ -17,5 +17,20 @@ public class DaoLogin extends ImplementacaoCrud<Object> implements RepositoryLog
 		SqlRowSet sqlRowSet = super.getJdbcTemplate().queryForRowSet(sql, new Object[]{login, senha});
 		return sqlRowSet.next() ? sqlRowSet.getInt("autentica") > 0 : false;
 	}
+	@Override
+	public void atualizaBanco(String sql, String fileName) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean contemVersao(String fileSql) throws Exception {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean contemTabela(String string) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
