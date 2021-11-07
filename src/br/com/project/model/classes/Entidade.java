@@ -153,10 +153,6 @@ public class Entidade implements Serializable {
 	@Column(name = "esa_codigo", length = 20)
 	private Set<String> acessos = new HashSet<String>();
 	
-<<<<<<< HEAD
-	private String ent_tipo = null;
-	
-=======
 
 	@Version
 	@Column(name = "versionNum")
@@ -178,7 +174,7 @@ public class Entidade implements Serializable {
 		return new JSONObject(map);
 	}
 
->>>>>>> b82debccd9321445826519ab55611a02b8d9bf53
+
 	public Long getEnt_codigo() {
 		return ent_codigo;
 	}
@@ -187,13 +183,7 @@ public class Entidade implements Serializable {
 		this.ent_codigo = ent_codigo;
 	}
 
-	public TipoCadastro getEnt_tipo() {
-		return ent_tipo;
-	}
 
-	public void setEnt_tipo(TipoCadastro ent_tipo) {
-		this.ent_tipo = ent_tipo;
-	}
 
 	public TipoPessoa getEnt_tipopessoa() {
 		return ent_tipopessoa;
@@ -355,14 +345,14 @@ public class Entidade implements Serializable {
 		this.ent_inativo = ent_inativo;
 	}
 
-<<<<<<< HEAD
-	public String getEnt_tipo() {
+
+	public TipoCadastro getEnt_tipo() {
 		return ent_tipo;
 	}
 
-	public void setEnt_tipo(String ent_tipo) {
+	public void setEnt_tipo(TipoCadastro ent_tipo) {
 		this.ent_tipo = ent_tipo;
-=======
+	}
 	public Date getEnt_datacadastro() {
 		return ent_datacadastro;
 	}
@@ -397,7 +387,6 @@ public class Entidade implements Serializable {
 
 	public Set<String> getAcessos() {
 		return acessos;
->>>>>>> b82debccd9321445826519ab55611a02b8d9bf53
 	}
 	
 

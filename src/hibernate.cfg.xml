@@ -21,11 +21,9 @@
     	<property name="hibernate.connection.autocommit">false</property>
    		<property name="hibernate.connection.pool_size">50</property>
    
-<<<<<<< HEAD
+
 		<mapping class="br.com.project.model.classes.Filial" />
-=======
    		<mapping class="br.com.project.model.classes.Filial" />
->>>>>>> 42cbbf2622005069ab9138cd105859876b5fe189
 		<mapping class="br.com.project.model.classes.Pais" />
 		<mapping class="br.com.project.model.classes.Estado" />
 		<mapping class="br.com.project.model.classes.Cidade" />
@@ -40,13 +38,10 @@
 		<mapping class="br.com.project.model.classes.ComissaoFuncionarioFilial" />
 		<mapping class="br.com.project.model.classes.ValorComissaoFuncionarioFilial" /> 
 		<mapping class="br.com.project.model.classes.InformacaoRevisao" />
-<<<<<<< HEAD
 		<mapping class="br.com.project.model.classes.SendEmail" />   		
-=======
 		<mapping class="br.com.project.model.classes.SendEmail" />
    		
->>>>>>> 42cbbf2622005069ab9138cd105859876b5fe189
-   		<listener class="org.hibernate.envers.event.AuditEventListener"
+  		<listener class="org.hibernate.envers.event.AuditEventListener"
    		 type="post-load"/>
    		
    		<listener class="org.hibernate.envers.event.AuditEventListener"
