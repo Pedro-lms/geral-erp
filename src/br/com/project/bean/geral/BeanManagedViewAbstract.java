@@ -1,5 +1,11 @@
 package br.com.project.bean.geral;
 
+<<<<<<< HEAD
+import org.springframework.stereotype.Component;
+
+import br.com.project.report.util.BeanReportView;
+
+=======
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,11 +40,15 @@ import br.com.project.util.all.UtilitariaRegex;
  * @author alex
  * 
  */
+>>>>>>> b82debccd9321445826519ab55611a02b8d9bf53
 @Component
 public abstract class BeanManagedViewAbstract extends BeanReportView {
 
 	private static final long serialVersionUID = 1L;
 
+<<<<<<< HEAD
+	
+=======
 	protected abstract Class<?> getClassImplement();
 
 	protected abstract InterfaceCrud<?> getController();
@@ -436,4 +446,5 @@ public abstract class BeanManagedViewAbstract extends BeanReportView {
 		return  event.getObject();
 	}
 
+>>>>>>> b82debccd9321445826519ab55611a02b8d9bf53
 }

@@ -19,6 +19,27 @@ import br.com.project.annotation.IdentificaCampoPesquisa;
 @Entity
 @Table(name = "pais")
 @SequenceGenerator(name = "pais_seq", sequenceName = "pais_seq", initialValue = 1, allocationSize = 1)
+<<<<<<< HEAD
+public class Pais implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	@IdentificaCampoPesquisa(descricaoCampo = "Codigo", campoConsulta = "pai_id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pais_seq")
+	private Long pai_id;
+	
+	@IdentificaCampoPesquisa(descricaoCampo = "Codigo", campoConsulta = "pai_id", principal = 1)
+	@Column(nullable = false, length = 80)
+	private String pai_nome;
+	
+	@Column(nullable = true, length = 15)
+	private String pai_sigla;
+
+	@Version
+	@Column(name = "versionNum")
+	private int versionNum;
+=======
 public class Pais implements Serializable {
 
 	private static final long serialVersionUID = -3563399263999877340L;
@@ -46,6 +67,7 @@ public class Pais implements Serializable {
 	public void setVersionNum(int versionNum) {
 		this.versionNum = versionNum;
 	}
+>>>>>>> b82debccd9321445826519ab55611a02b8d9bf53
 
 	public Long getPai_id() {
 		return pai_id;
@@ -71,6 +93,21 @@ public class Pais implements Serializable {
 		this.pai_sigla = pai_sigla;
 	}
 
+<<<<<<< HEAD
+	public int getVersionNum() {
+		return versionNum;
+	}
+
+	public void setVersionNum(int versionNum) {
+		this.versionNum = versionNum;
+	}
+	
+	/*
+	 * Verificação para o id ser o diferenciador
+	 */
+
+=======
+>>>>>>> b82debccd9321445826519ab55611a02b8d9bf53
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -96,4 +133,8 @@ public class Pais implements Serializable {
 		return true;
 	}
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> b82debccd9321445826519ab55611a02b8d9bf53
 }
